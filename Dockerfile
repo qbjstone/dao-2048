@@ -1,12 +1,12 @@
 # Using a compact OS
-FROM daocloud.io/nginx:1.11-alpine
+# FROM docker.m.daocloud.io/nginx:1.23.0-alpine
+FROM nginx:1.23.0-alpine
 
-MAINTAINER Golfen Guo <golfen.guo@daocloud.io>
+# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+RUN apk add --no-cache bash
 
 # Add 2048 stuff into Nginx server
 COPY . /usr/share/nginx/html
-
 EXPOSE 80
-
 # Start Nginx and keep it running background and start php
-CMD sed -i "s/ContainerID: /ContainerID: "$(hostname)"/g" /usr/share/nginx/html/index.html && nginx -g "daemon off;"
+CMD bash /usr/share/nginx/html/scripts/start.sh
